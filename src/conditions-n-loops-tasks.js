@@ -276,8 +276,25 @@ function isContainNumber(num, dig) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  for (let i = 0; i < arr.length; i += 1) {
+    let leftSum = 0;
+    let rightSum = 0;
+
+    for (let j = 0; j < i; j += 1) {
+      leftSum += arr[j];
+    }
+
+    for (let k = i + 1; k < arr.length; k += 1) {
+      rightSum += arr[k];
+    }
+
+    if (leftSum === rightSum) {
+      return i;
+    }
+  }
+
+  return -1;
 }
 
 /**
@@ -301,8 +318,66 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const matrix = [];
+  let value = 1;
+  let direction = 'right';
+  let row = 0;
+  let col = 0;
+  const visited = [];
+
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = [];
+    visited[i] = [];
+    for (let j = 0; j < size; j += 1) {
+      visited[i][j] = false;
+    }
+  }
+
+  for (let i = 0; i < size * size; i += 1) {
+    matrix[row][col] = value;
+    visited[row][col] = true;
+    value += 1;
+
+    switch (direction) {
+      case 'right':
+        if (col + 1 < size && !visited[row][col + 1]) {
+          col += 1;
+        } else {
+          direction = 'down';
+          row += 1;
+        }
+        break;
+      case 'down':
+        if (row + 1 < size && !visited[row + 1][col]) {
+          row += 1;
+        } else {
+          direction = 'left';
+          col -= 1;
+        }
+        break;
+      case 'left':
+        if (col - 1 >= 0 && !visited[row][col - 1]) {
+          col -= 1;
+        } else {
+          direction = 'up';
+          row -= 1;
+        }
+        break;
+      case 'up':
+        if (row - 1 >= 0 && !visited[row - 1][col]) {
+          row -= 1;
+        } else {
+          direction = 'right';
+          col += 1;
+        }
+        break;
+      default:
+        return '';
+    }
+  }
+
+  return matrix;
 }
 
 /**
