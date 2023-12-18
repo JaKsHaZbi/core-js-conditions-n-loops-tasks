@@ -40,7 +40,10 @@ function isPositive(number) {
  *  -0.1, 0, 0.2  => 0.2
  */
 function getMaxNumber(a, b, c) {
-  return Math.max(a, b, c);
+  if (a > b && a > c) return a;
+  if (b > a && b > c) return b;
+  if (c > a && c > b) return c;
+  return c;
 }
 
 /**
@@ -150,40 +153,59 @@ function convertToRomanNumerals(num) {
  *  '1950.2'  => 'one nine five zero point two'
  */
 function convertNumberToString(numberStr) {
-  const convertedString = numberStr.replace(',', '.');
-  return convertedString
-    .split('')
-    .map((el) => {
-      switch (el) {
-        case '0':
-          return 'zero';
-        case '1':
-          return 'one';
-        case '2':
-          return 'two';
-        case '3':
-          return 'three';
-        case '4':
-          return 'four';
-        case '5':
-          return 'five';
-        case '6':
-          return 'six';
-        case '7':
-          return 'seven';
-        case '8':
-          return 'eight';
-        case '9':
-          return 'nine';
-        case '.':
-          return 'point';
-        case '-':
-          return 'minus';
-        default:
-          return '';
-      }
-    })
-    .join(' ');
+  let result = '';
+
+  for (let i = 0; i < numberStr.length; i += 1) {
+    const el = numberStr[i];
+
+    switch (el) {
+      case '0':
+        result += 'zero';
+        break;
+      case '1':
+        result += 'one';
+        break;
+      case '2':
+        result += 'two';
+        break;
+      case '3':
+        result += 'three';
+        break;
+      case '4':
+        result += 'four';
+        break;
+      case '5':
+        result += 'five';
+        break;
+      case '6':
+        result += 'six';
+        break;
+      case '7':
+        result += 'seven';
+        break;
+      case '8':
+        result += 'eight';
+        break;
+      case '9':
+        result += 'nine';
+        break;
+      case '.':
+        result += 'point';
+        break;
+      case ',':
+        result += 'point';
+        break;
+      case '-':
+        result += 'minus';
+        break;
+      default:
+        break;
+    }
+
+    if (i !== numberStr.length - 1) result += ' ';
+  }
+
+  return result;
 }
 
 /**
