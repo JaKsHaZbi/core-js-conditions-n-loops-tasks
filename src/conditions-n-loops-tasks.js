@@ -61,8 +61,15 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (
+    queen.x === king.x ||
+    queen.y === king.y ||
+    Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)
+  ) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -139,8 +146,41 @@ function convertToRomanNumerals(num) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  const convertedString = numberStr.replace(',', '.');
+  return convertedString
+    .split('')
+    .map((el) => {
+      switch (el) {
+        case '0':
+          return 'zero';
+        case '1':
+          return 'one';
+        case '2':
+          return 'two';
+        case '3':
+          return 'three';
+        case '4':
+          return 'four';
+        case '5':
+          return 'five';
+        case '6':
+          return 'six';
+        case '7':
+          return 'seven';
+        case '8':
+          return 'eight';
+        case '9':
+          return 'nine';
+        case '.':
+          return 'point';
+        case '-':
+          return 'minus';
+        default:
+          return '';
+      }
+    })
+    .join(' ');
 }
 
 /**
@@ -319,8 +359,28 @@ function shuffleChar(/* str, iterations */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const mat = [...matrix];
+  const rows = mat.length;
+  if (rows === 0) return;
+
+  const cols = mat[0].length;
+
+  for (let i = 0; i < rows; i += 1) {
+    for (let j = i; j < cols; j += 1) {
+      const temp = mat[i][j];
+      mat[i][j] = mat[j][i];
+      mat[j][i] = temp;
+    }
+  }
+
+  for (let i = 0; i < rows; i += 1) {
+    for (let j = 0; j < cols / 2; j += 1) {
+      const temp = mat[i][j];
+      mat[i][j] = mat[i][cols - 1 - j];
+      mat[i][cols - 1 - j] = temp;
+    }
+  }
 }
 
 module.exports = {
