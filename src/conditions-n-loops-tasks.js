@@ -458,8 +458,83 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+
+const swap = (array, firstItemIndex, lastItemIndex) => {
+  const arr = array;
+  const temp = arr[firstItemIndex];
+
+  // Swap first and last items in the array
+  arr[firstItemIndex] = arr[lastItemIndex];
+  arr[lastItemIndex] = temp;
+};
+
+const heapify = (heap, ind, max) => {
+  let i = ind;
+  let index;
+  let leftChild;
+  let rightChild;
+
+  while (i < max) {
+    index = i;
+
+    // Get the left child index
+    // Using the known formula
+    leftChild = 2 * i + 1;
+
+    // Get the right child index
+    // Using the known formula
+    rightChild = leftChild + 1;
+
+    // If the left child is not last element
+    // And its value is bigger
+    if (leftChild < max && heap[leftChild] > heap[index]) {
+      index = leftChild;
+    }
+
+    // If the right child is not last element
+    // And its value is bigger
+    if (rightChild < max && heap[rightChild] > heap[index]) {
+      index = rightChild;
+    }
+
+    // If none of the above conditions is true
+    // Just return
+    if (index === i) {
+      return;
+    }
+
+    // Else swap elements
+    swap(heap, i, index);
+
+    // Continue by using the swapped index
+    i = index;
+  }
+};
+
+const buildMaxHeap = (arr) => {
+  // Get index of the middle element
+  let i = Math.floor(arr.length / 2 - 1);
+
+  // Build a max heap out of
+  // All array elements passed in
+  while (i >= 0) {
+    heapify(arr, i, arr.length);
+    i -= 1;
+  }
+};
+
+function sortByAsc(arr) {
+  buildMaxHeap(arr);
+
+  let lastElement = arr.length - 1;
+
+  while (lastElement > 0) {
+    swap(arr, 0, lastElement);
+    heapify(arr, 0, lastElement);
+    lastElement -= 1;
+  }
+
+  return arr;
 }
 
 /**
